@@ -1,0 +1,44 @@
+version: '3'
+services:
+  address-service:
+    container_name: address-service
+    build:
+      context: ./address-service
+      args:
+        JDK_VERSION: 11
+      dockerfile: Dockerfile
+    image: girishtechieguy/address-service
+    ports:
+      - 9002:9002
+  customer-service:
+    container_name: customer-service
+    build:
+      context: ./customer-service
+      args:
+        JDK_VERSION: 11
+      dockerfile: Dockerfile
+    image: girishtechieguy/customer-service
+    ports:
+      - 9001:9001
+    links:
+      - "address-service:address-service"
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      args:
+        JDK_VERSION: 11
+      dockerfile: Dockerfile
+    image: girishtechieguy/api-gateway
+    ports:
+      - 9191:9191
+  service-registry:
+    container_name: service-registry
+    build:
+      context: ./service-registry
+      args:
+        JDK_VERSION: 11
+      dockerfile: Dockerfile
+    image: girishtechieguy/service-registry
+    ports:
+      - 8761:8761
